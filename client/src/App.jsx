@@ -1,10 +1,13 @@
-import React from 'react'
+import AllCourse from './pages/AllCourse'
+import CourseDetails from './pages/CourseDetails'
+import { Routes, Route } from 'react-router-dom'
 
 const App = () => {
   return (
-    <div>
-      
-    </div>
+    <Routes>
+      <Route path="/courses" element={<AllCourse />} />
+      <Route path="/courses/:id" element={<CourseDetails />} />
+    </Routes>
   )
 }
 

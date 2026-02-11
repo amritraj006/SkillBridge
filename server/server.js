@@ -4,13 +4,14 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { inngest, functions } from "./inngest/index.js";
 import connectDB from "./config/db.js";
+import courseRoutes from "./routes/courseRoutes.js";
 
 dotenv.config();
 
 const app = express();
 
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? 'https://skillbridge.vercel.app' : 'http://localhost:5174',
+  origin: process.env.NODE_ENV === 'production' ? 'frontend-url' : 'http://localhost:5173',
 }));
 app.use(express.json());
 
@@ -21,6 +22,8 @@ app.use("/api/inngest", serve({ client: inngest, functions }));
 app.get("/", (req, res) => {
   res.send("Welcome to the SkillBridge API!");
 });
+
+app.use("/api/courses", courseRoutes);
 
 const PORT = process.env.PORT || 5003;
 
