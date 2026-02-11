@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { getAllCourses } from '../api/api';
+import CourseCard from '../components/course/CourseCard';
 
 const AllCourse = () => {
     const [courses, setCourses] = useState([]);
@@ -22,15 +23,13 @@ const AllCourse = () => {
   return (
     <div>
 
-        {courses.length === 0 ? (
-            <p>No courses available.</p>
-        ) : (
-            <ul>
-                {courses.map(course => (
-                    <li key={course._id}>{course._id} {course.title}</li>
-                ))}
-            </ul>
-        )}
+        {courses.map(course => (
+            <div>
+            
+            <CourseCard key={course._id} course={course} />
+            </div>
+        ))}
+        <p className="text-center mt-4">Showing {courses.length} courses</p>
 
     </div>
   )

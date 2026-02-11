@@ -13,6 +13,7 @@ const app = express();
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' ? 'frontend-url' : 'http://localhost:5173',
 }));
+
 app.use(express.json());
 
 connectDB();

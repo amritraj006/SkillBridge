@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
 
     image: { type: String, required: true },
 
-    // Optional fields (can update later)
+    // Optional fields
     phone: { type: String, default: "" },
 
     address: {
@@ -21,6 +21,14 @@ const userSchema = new mongoose.Schema(
       country: { type: String, default: "India" },
       pincode: { type: String, default: "" },
     },
+
+    // Courses purchased by the user
+    purchasedCourses: [
+      {
+        type: mongoose.Schema.Types.ObjectId, // Reference to Course _id
+        ref: "Course",
+      },
+    ],
   },
   { timestamps: true }
 );
