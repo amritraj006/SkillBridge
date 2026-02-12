@@ -19,3 +19,4 @@ export const getCourseById = async (id) => {
         throw error;
     }
 };
+

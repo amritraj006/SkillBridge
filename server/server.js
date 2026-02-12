@@ -13,7 +13,7 @@ const app = express();
 
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['frontend-url', 'admin-url']
+    ? ['https://skillbridge-1-ggdj.onrender.com/', 'admin-url']
     : ['http://localhost:5173', 'http://localhost:5174'],
 }));
 
