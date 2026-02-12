@@ -1,7 +1,6 @@
-// CourseDetails.jsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCourseById } from '../api/api';
+import { getCourseById } from '../api/courseApi';
 
 const CourseDetails = () => {
   const { id } = useParams(); // get course ID from URL
@@ -34,21 +33,47 @@ const CourseDetails = () => {
   }, [id]);
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Course Details</h1>
-      <h2>ID: {id}</h2>
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      {loading && <p className="text-center text-gray-500">Loading course data...</p>}
 
-      {loading && <p>Loading course data...</p>}
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="text-center text-red-500">{error}</p>}
 
       {course && (
-        <div style={{ marginTop: '1rem' }}>
-          <h3>{course.title}</h3>
-          <p>{course.description}</p>
-          {course.instructor && <p><strong>Instructor:</strong> {course.instructor}</p>}
-          {course.duration && <p><strong>Duration:</strong> {course.duration}</p>}
-          {/* Add more course fields here if needed */}
+        <div className="bg-white shadow-md rounded-lg p-6 space-y-4">
+          <h1 className="text-2xl font-bold text-blue-600">{course.title}</h1>
+          
+          {course.thumbnailUrl && (
+            <img
+              src={course.thumbnailUrl}
+              alt={course.title}
+              className="w-full h-64 object-cover rounded-lg"
+            />
+          )}
+
+          <p className="text-gray-700">{course.description}</p>
+
+          {course.instructor && (
+            <p>
+              <span className="font-semibold">Instructor:</span> {course.instructor}
+            </p>
+          )}
+
+          {course.duration && (
+            <p>
+              <span className="font-semibold">Duration:</span> {course.duration}
+            </p>
+          )}
+
+          {course.price && (
+            <p className="text-blue-600 font-semibold">Price: {course.price === 0 ? 'Free' : `$${course.price}`}</p>
+          )}
+
+          {/* Optional: Add Enroll button */}
+          <button
+            className="mt-4 bg-blue-500 text-white font-medium px-4 py-2 rounded hover:bg-blue-600 transition"
+          >
+            Enroll Now
+          </button>
         </div>
       )}
     </div>

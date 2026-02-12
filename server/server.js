@@ -5,13 +5,16 @@ import dotenv from "dotenv";
 import { inngest, functions } from "./inngest/index.js";
 import connectDB from "./config/db.js";
 import courseRoutes from "./routes/courseRoutes.js";
+import roadmapRoutes from "./routes/roadmapRoutes.js";
 
 dotenv.config();
 
 const app = express();
 
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? 'frontend-url' : 'http://localhost:5173',
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['frontend-url', 'admin-url']
+    : ['http://localhost:5173', 'http://localhost:5174'],
 }));
 
 app.use(express.json());
@@ -25,6 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/courses", courseRoutes);
+app.use("/api/roadmap", roadmapRoutes);
 
 const PORT = process.env.PORT || 5003;
 

@@ -1,0 +1,22 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Clean white background -->
+  <rect width="64" height="64" rx="16" fill="white"/>
+  <rect width="64" height="64" rx="16" stroke="#E2E8F0" stroke-width="1"/>
+  
+  <!-- Bridge Icon - Greatly Enlarged -->
+  <g transform="translate(12, 12)">
+    <!-- Bridge Arc - Much bigger -->
+    <path d="M4 24C4 16.9543 9.9543 11 17 11C24.0457 11 30 16.9543 30 24" stroke="#2563EB" stroke-width="4" stroke-linecap="round"/>
+    <path d="M30 24C30 31.0457 24.0457 37 17 37C9.9543 37 4 31.0457 4 24" stroke="#2563EB" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Bridge Pillars - Taller and wider -->
+    <rect x="12" y="33" width="3" height="9" rx="1.5" fill="#2563EB" fill-opacity="0.8"/>
+    <rect x="20" y="33" width="3" height="9" rx="1.5" fill="#2563EB" fill-opacity="0.8"/>
+    
+    <!-- Center Dot - Larger -->
+    <circle cx="17" cy="18" r="3.5" fill="#2563EB"/>
+    
+    <!-- Additional connection dot for more detail -->
+    <circle cx="17" cy="28" r="2.5" fill="#2563EB" fill-opacity="0.6"/>
+  </g>
+</svg>
