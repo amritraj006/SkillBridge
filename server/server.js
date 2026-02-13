@@ -11,19 +11,9 @@ dotenv.config();
 
 const app = express();
 
-app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? [
-            "https://skillbridge-1-ggdj.onrender.com",
-            "admin-url"
-          ]
-        : ["http://localhost:5173", "http://localhost:5174"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: "*", // Allow all origins (for development). In production, specify your frontend URL.
+}))
 
 app.use(express.json());
 
