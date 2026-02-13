@@ -1,46 +1,23 @@
-import { serve } from "inngest/express";
-import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
-import { inngest, functions } from "./inngest/index.js";
+import app from "./app.js";
 import connectDB from "./config/db.js";
-import courseRoutes from "./routes/courseRoutes.js";
-import roadmapRoutes from "./routes/roadmapRoutes.js";
 
 dotenv.config();
 
-const app = express();
-
-app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? [
-            "https://skillbridge-1-ggdj.onrender.com",
-            "admin-url"
-          ]
-        : ["http://localhost:5173", "http://localhost:5174"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
-
-
-app.use(express.json());
-
-connectDB();
-
-app.use("/api/inngest", serve({ client: inngest, functions }));
-
-app.get("/", (req, res) => {
-  res.send("Welcome to the SkillBridge API!");
-});
-
-app.use("/api/courses", courseRoutes);
-app.use("/api/roadmap", roadmapRoutes);
-
 const PORT = process.env.PORT || 5003;
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    console.log("✅ Database connected");
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Server failed to start:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
