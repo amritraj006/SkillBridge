@@ -1,9 +1,20 @@
 import axios from "axios";
 
-const baseURL = import.meta.env.MODE === "production" 
-    ? "https://skillbridge-9qwh.onrender.com" 
-    : "http://localhost:5003";
+const isProd = import.meta.env.MODE === "production";
 
-const api = axios.create({baseURL});
+const baseURL = isProd
+  ? "https://skillbridge-9qwh.onrender.com"
+  : "http://localhost:5003";
+
+// ✅ verification logs
+console.log("🔍 Vite MODE:", import.meta.env.MODE);
+console.log("🌐 API Base URL:", baseURL);
+console.log(
+  isProd
+    ? "✅ Using PRODUCTION backend (Render)"
+    : "⚙️ Using LOCAL backend (localhost)"
+);
+
+const api = axios.create({ baseURL });
 
 export default api;
