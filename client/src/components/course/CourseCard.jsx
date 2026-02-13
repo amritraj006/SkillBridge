@@ -1,18 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Clock, Users, Star, Sparkles } from 'lucide-react';
+import { Clock, Users, Sparkles } from 'lucide-react';
 
 const CourseCard = ({ course }) => {
   const navigate = useNavigate();
 
   // Default values if not provided
   const {
-    title = "Untitled Course",
-    description = "No description available",
-    thumbnailUrl = "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=200&fit=crop",
+    title,
+    description,
+    thumbnailUrl,
     price,
     duration,
     availableSlots,
-    level = "Beginner",
+    level,
     category
   } = course;
 
