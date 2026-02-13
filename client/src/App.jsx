@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Footer from './components/Footer'
 import RoadmapGenerator from './pages/RoadmapGenerator'
 import About from './pages/About'
+import SearchResult from './components/SearchResult'
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
         <Route path='/ai' element={<RoadmapGenerator />} />
         <Route path='/about' element={<About />} />
       </Routes>
+
       <Footer />
     </>
   )

@@ -12,17 +12,25 @@ const courseSchema = new mongoose.Schema(
       default: "Beginner",
     },
 
+    // ✅ NEW: Duration (example: "6 weeks" or "12 hours")
+    duration: { type: String, required: true, default: "Not specified" },
+
+    // ✅ NEW: Total seats / slots
+    totalSlots: { type: Number, required: true, default: 50 },
+
+    // ✅ NEW: Remaining slots (will reduce after enrollment)
+    availableSlots: { type: Number, required: true, default: 50 },
+
     price: { type: Number, required: true, default: 0 },
 
     thumbnailUrl: { type: String, required: true },
 
     youtubeUrl: { type: String, required: true, trim: true },
 
-    // ✅ Multiple notes support
     notes: [
       {
-        title: { type: String, required: true }, // Example: "Chapter 1 Notes"
-        fileUrl: { type: String, required: true }, // pdf/doc link
+        title: { type: String, required: true },
+        fileUrl: { type: String, required: true },
         uploadedAt: { type: Date, default: Date.now },
       },
     ],

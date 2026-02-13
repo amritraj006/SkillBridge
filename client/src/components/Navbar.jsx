@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { UserButton, useUser } from "@clerk/clerk-react";
 import { ShoppingCart, Menu, X, Search } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useAppContext } from "../contexts/AppContext";
+import SearchResult from "./SearchResult";
 
 const Navbar = () => {
   const { isSignedIn, user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [cartCount] = useState(3); // This would come from your cart state
   const navigate = useNavigate();
+  const {searchQuery, setSearchQuery} = useAppContext();
 
   const navLinks = [
     { to: "/", label: "Home" },
@@ -67,11 +70,14 @@ const Navbar = () => {
             {/* Search Bar */}
             <div className="relative hidden lg:block">
               <input
+              value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 type="text"
                 placeholder="Search courses..."
                 className="w-64 pl-4 pr-10 py-2 text-sm bg-slate-50 border border-slate-200 rounded-full outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-slate-400"
               />
               <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <SearchResult />
             </div>
 
             {/* Cart */}
@@ -134,11 +140,14 @@ const Navbar = () => {
             {/* Mobile Search */}
             <div className="relative">
               <input
+              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchQuery}
                 type="text"
                 placeholder="Search courses..."
                 className="w-full pl-4 pr-10 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
               />
               <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <SearchResult />
             </div>
 
             {/* Mobile Nav Links */}

@@ -22,10 +22,22 @@ const userSchema = new mongoose.Schema(
       pincode: { type: String, default: "" },
     },
 
+    // ✅ Cart courses
+    cartCourses: [
+      {
+        course: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Course",
+          required: true,
+        },
+        addedAt: { type: Date, default: Date.now },
+      },
+    ],
+
     // Courses purchased by the user
     purchasedCourses: [
       {
-        type: mongoose.Schema.Types.ObjectId, // Reference to Course _id
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Course",
       },
     ],
