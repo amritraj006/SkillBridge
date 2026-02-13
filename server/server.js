@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: "*", // Allow all origins (for development). In production, specify your frontend URL.
+  origin: "*",
 }))
 
 app.use(express.json());
