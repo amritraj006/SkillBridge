@@ -4,8 +4,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import { inngest, functions } from "./inngest/index.js";
-import { inngest2, functions2 } from "./inngest/index2.js";
-
 import courseRoutes from "./routes/courseRoutes.js";
 import roadmapRoutes from "./routes/roadmapRoutes.js";
 
@@ -40,8 +38,7 @@ app.use(
 app.use(express.json());
 
 // ✅ Routes
-app.use("/api/inngest", serve({ client: inngest, functions, secret: process.env.USER_INNGEST_SIGNING_KEY }));
-app.use("/api/inngest2", serve({ client: inngest2, functions: functions2, secret: process.env.TEACHER_INNGEST_SIGNING_KEY }));
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 app.get("/", (req, res) => {
   res.send("Welcome to the SkillBridge API!");
