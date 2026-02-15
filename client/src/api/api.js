@@ -3,7 +3,7 @@ import axios from "axios";
 const isProd = import.meta.env.MODE === "production";
 
 const baseURL = isProd
-  ? "https://skillbridge-9qwh.onrender.com"
+  ? "https://skillbridge-hnae.onrender.com"
   : "http://localhost:5003";
 
 // ✅ verification logs

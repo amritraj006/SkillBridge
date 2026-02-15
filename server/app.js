@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { inngest, functions } from "./inngest/index.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import roadmapRoutes from "./routes/roadmapRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
 
@@ -46,5 +47,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/courses", courseRoutes);
 app.use("/api/roadmap", roadmapRoutes);
+app.use("/api/user", userRoutes);
 
 export default app;

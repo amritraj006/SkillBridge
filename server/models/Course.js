@@ -31,7 +31,7 @@ const courseSchema = new mongoose.Schema(
     ],
 
     // ✅ Teacher reference (Clerk teacher id)
-    teacherClerkId: { type: String, required: true },
+    createdBy: { type: String, required: true },
 
     // ✅ Students stats
     totalEnrolled: { type: Number, default: 0 },

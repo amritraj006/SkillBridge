@@ -14,6 +14,7 @@ const AllCourse = () => {
     { id: 'web-development', name: 'Web Development' },
     { id: 'data-science', name: 'Data Science' },
     { id: 'cloud-computing', name: 'Cloud Computing' },
+    {id: 'machine-learning', name: 'Machine Learning'},
     { id: 'business', name: 'Business' },
   ];
 
