@@ -12,19 +12,14 @@ const courseSchema = new mongoose.Schema(
       default: "Beginner",
     },
 
-    // ✅ NEW: Duration (example: "6 weeks" or "12 hours")
     duration: { type: String, required: true, default: "Not specified" },
 
-    // ✅ NEW: Total seats / slots
     totalSlots: { type: Number, required: true, default: 50 },
-
-    // ✅ NEW: Remaining slots (will reduce after enrollment)
     availableSlots: { type: Number, required: true, default: 50 },
 
     price: { type: Number, required: true, default: 0 },
 
     thumbnailUrl: { type: String, required: true },
-
     youtubeUrl: { type: String, required: true, trim: true },
 
     notes: [
@@ -35,9 +30,23 @@ const courseSchema = new mongoose.Schema(
       },
     ],
 
-    createdBy: { type: String, required: true },
+    // ✅ Teacher reference (Clerk teacher id)
+    teacherClerkId: { type: String, required: true },
 
+    // ✅ Students stats
     totalEnrolled: { type: Number, default: 0 },
+
+    // ✅ Course Revenue
+    totalRevenue: { type: Number, default: 0 },
+
+    // ✅ Optional: store enrolled students (recommended)
+    enrolledStudents: [
+      {
+        studentClerkId: { type: String, required: true },
+        studentEmail: { type: String, required: true },
+        enrolledAt: { type: Date, default: Date.now },
+      },
+    ],
 
     isPublished: { type: Boolean, default: true },
   },

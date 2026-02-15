@@ -1,13 +1,13 @@
 import { Inngest } from "inngest";
-import User from "../models/User.js";
+import Teacher from "../models/User.js";
 // Create a client to send and receive events
 
-const inngest = new Inngest({ id: "skillbridge-user" });
+const inngest2 = new Inngest({ id: "skillbridge-teacher" });
 
 //Inngest function to save user data to database
 
-const syncUserCreation = inngest.createFunction(
-    {id: 'sync-user-from-clerk'},
+const syncTeacherCreation = inngest.createFunction(
+    {id: 'sync-teacher-from-clerk'},
     {event: 'clerk/user.created'},
     async ({ event }) => {
         // Logic to save user data to database
@@ -18,26 +18,26 @@ const syncUserCreation = inngest.createFunction(
             name: first_name + ' ' + last_name,
             image: image_url
         }
-        await User.create(userData);
+        await Teacher.create(userData);
     }
 )
 
 //Inngest function to delete user from database
 
-const syncUserDeletion = inngest.createFunction(
-    {id: 'delete-user-with-clerk'},
+const syncTeacherDeletion = inngest.createFunction(
+    {id: 'delete-teacher-with-clerk'},
     {event: 'clerk/user.deleted'},
     async ({ event }) => {
         // Logic to delete user data from database
         const {id} = event.data;
-        await User.findByIdAndDelete(id);
+        await Teacher.findByIdAndDelete(id);
     }
 )
 
 //Inngest function to update user in database
 
-const syncUserUpdation = inngest.createFunction(
-    {id: 'update-user-from-clerk'},
+const syncTeacherUpdation = inngest.createFunction(
+    {id: 'update-teacher-from-clerk'},
     {event: 'clerk/user.updated'},
     async ({ event }) => {
         // Logic to update user data in database
@@ -48,11 +48,11 @@ const syncUserUpdation = inngest.createFunction(
             name: first_name + ' ' + last_name,
             image: image_url
         }
-        await User.findByIdAndUpdate(id, userData);
+        await Teacher.findByIdAndUpdate(id, userData);
     }
 )
 
 // Create an empty array where we'll export future Inngest functions
-const functions = [syncUserCreation, syncUserDeletion, syncUserUpdation];
+const functions2 = [syncTeacherCreation, syncTeacherDeletion, syncTeacherUpdation];
 
-export { inngest, functions };
+export { inngest2, functions2 };

@@ -20,7 +20,6 @@ const App = () => {
         <Route path='/ai' element={<RoadmapGenerator />} />
         <Route path='/about' element={<About />} />
       </Routes>
-
       <Footer />
     </>
   )
