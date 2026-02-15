@@ -6,7 +6,7 @@ const inngest2 = new Inngest({ id: "skillbridge-teacher" });
 
 //Inngest function to save user data to database
 
-const syncTeacherCreation = inngest.createFunction(
+const syncTeacherCreation = inngest2.createFunction(
     {id: 'sync-teacher-from-clerk'},
     {event: 'clerk/user.created'},
     async ({ event }) => {
@@ -24,7 +24,7 @@ const syncTeacherCreation = inngest.createFunction(
 
 //Inngest function to delete user from database
 
-const syncTeacherDeletion = inngest.createFunction(
+const syncTeacherDeletion = inngest2.createFunction(
     {id: 'delete-teacher-with-clerk'},
     {event: 'clerk/user.deleted'},
     async ({ event }) => {
@@ -36,7 +36,7 @@ const syncTeacherDeletion = inngest.createFunction(
 
 //Inngest function to update user in database
 
-const syncTeacherUpdation = inngest.createFunction(
+const syncTeacherUpdation = inngest2.createFunction(
     {id: 'update-teacher-from-clerk'},
     {event: 'clerk/user.updated'},
     async ({ event }) => {
