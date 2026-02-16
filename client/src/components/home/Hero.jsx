@@ -1,8 +1,10 @@
-import React from "react";
+
 import { NavLink } from "react-router-dom";
 import { Sparkles, BookOpen, ArrowRight, Users, Trophy, Zap } from "lucide-react";
+import { useAppContext } from "../../contexts/AppContext";
 
 const Hero = () => {
+  const {totalCourses, totalUsers} = useAppContext();
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       {/* Background decorative elements */}
@@ -78,8 +80,8 @@ const Hero = () => {
                   <Users size={16} className="text-blue-600" />
                 </div>
                 <div className="text-left">
-                  <p className="text-sm font-semibold text-slate-900">50K+</p>
-                  <p className="text-xs text-slate-500">Active Learners</p>
+                  <p className="text-sm font-semibold text-slate-900">{totalUsers}+</p>
+                  <p className="text-xs text-slate-500">Active Users</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -87,7 +89,7 @@ const Hero = () => {
                   <Trophy size={16} className="text-blue-600" />
                 </div>
                 <div className="text-left">
-                  <p className="text-sm font-semibold text-slate-900">500+</p>
+                  <p className="text-sm font-semibold text-slate-900">{totalCourses}+</p>
                   <p className="text-xs text-slate-500">Courses</p>
                 </div>
               </div>

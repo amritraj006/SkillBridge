@@ -1,4 +1,4 @@
-import React from "react";
+
 import { GraduationCap, Monitor, BarChart2, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
 
 const features = [

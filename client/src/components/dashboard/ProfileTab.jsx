@@ -1,4 +1,4 @@
-import React from "react";
+
 import { User, Mail, Phone, MapPin, Home, Calendar, Sparkles, Loader2 } from "lucide-react";
 
 const ProfileTab = ({ loading, userDetails, onEdit, showValue, formatAddress }) => {

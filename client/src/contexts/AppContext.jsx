@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAllCourses } from "../api/courseApi";
+import { getAllUsers } from "../api/userApi";
 
 const AppContext = createContext(null);
 
@@ -7,6 +8,7 @@ export const AppProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
+  const [users, setUsers] = useState([]);
 
   // ✅ Fetch courses once
   useEffect(() => {
@@ -37,12 +39,33 @@ export const AppProvider = ({ children }) => {
     setFilteredCourses(filtered);
   }, [searchQuery, courses]);
 
+  const totalCourses = courses.length;
+
+
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      try {
+        const data = await getAllUsers();
+        setUsers(data);
+      } catch(error) {
+        console.log("Error fetching users:", error);
+
+      }
+    }
+
+    fetchAllUsers();
+  }, [])
+
+  const totalUsers = users.length;
+
   return (
     <AppContext.Provider
       value={{
         searchQuery,
         setSearchQuery,
         filteredCourses,
+        totalCourses,
+        totalUsers
       }}
     >
       {children}

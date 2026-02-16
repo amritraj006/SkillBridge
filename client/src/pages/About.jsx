@@ -25,7 +25,7 @@ const About = () => {
     },
     {
       id: 2,
-      name: "Nikhil Ahlawat",
+      name: "Nikil Ahlawat",
       role: "Cloud & DevOps Engineer",
       description: "Cloud infrastructure specialist who manages MongoDB Atlas clusters and handles website deployment with 99.9% uptime.",
       image: "https://images.unsplash.com/photo-1494790108755-2097e1a5d2c6?w=400&h=400&fit=crop&crop=faces",

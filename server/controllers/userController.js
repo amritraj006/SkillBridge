@@ -16,3 +16,14 @@ export const userDetails = async (req, res) => {
     return res.status(500).json({ message: "Server Error" });
   }
 };
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().sort({created: -1});
+    if (users.length === 0) return res.status(404).json({ message: "No users found." })
+    return res.json(users);
+  }catch(error) {
+    console.error("Error fetching users:", error.message);
+    return res.status(500).json({message: "Server Error"});
+  }
+}
