@@ -34,7 +34,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-       <NavLink to="/" className="flex items-center gap-2 shrink-0">
+       <NavLink to="/" onClick={() => scrollTo(0,0)} className="flex items-center gap-2 shrink-0">
   <img 
     src="/logo2.svg" 
     alt="SkillBridge" 
@@ -52,6 +52,7 @@ const Navbar = () => {
             <div className="flex items-center gap-6 lg:gap-8">
               {filteredLinks.map((link) => (
                 <NavLink
+                onClick={() => scrollTo(0,0)}
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) =>
