@@ -11,11 +11,11 @@ const AllCourse = () => {
 
   const categories = [
     { id: 'all', name: 'All Courses' },
-    { id: 'web-development', name: 'Web Development' },
-    { id: 'data-science', name: 'Data Science' },
-    { id: 'cloud-computing', name: 'Cloud Computing' },
-    {id: 'machine-learning', name: 'Machine Learning'},
-    { id: 'business', name: 'Business' },
+    { id: 'Web Development', name: 'Web Development' },
+    { id: 'Data Science', name: 'Data Science' },
+    { id: 'Cloud Computing', name: 'Cloud Computing' },
+    {id: 'Machine Learning', name: 'Machine Learning'},
+    { id: 'Business', name: 'Business' },
   ];
 
   const fetchCourses = async () => {

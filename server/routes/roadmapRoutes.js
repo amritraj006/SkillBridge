@@ -10,7 +10,6 @@ const router = express.Router();
 
 router.post("/generate", generateRoadmap);
 router.get("/history/:userId", getUserRoadmaps);
-
 router.delete("/delete/:chatId", deleteSingleRoadmap);
 router.delete("/delete-all/:userId", deleteAllRoadmaps);
 
