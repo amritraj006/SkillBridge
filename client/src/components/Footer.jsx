@@ -1,5 +1,5 @@
 import React from "react";
-import { Facebook, Instagram, Linkedin, Github, Mail, Phone, MapPin, Sparkles } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Github, Mail, Phone, MapPin, Sparkles, Twitter } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const Footer = () => {
@@ -20,10 +20,10 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "https://facebook.com", label: "Facebook" },
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
-    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-    { icon: Github, href: "https://github.com", label: "GitHub" },
+    { icon: Twitter, href: "https://x.com/AMRITFFYT12521", label: "Twitter" },
+    { icon: Instagram, href: "https://www.instagram.com/__amrit__raj__0001/", label: "Instagram" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/amrit-raj-54652b294/", label: "LinkedIn" },
+    { icon: Github, href: "https://github.com/amritraj006", label: "GitHub" },
   ];
 
   return (
@@ -61,21 +61,21 @@ const Footer = () => {
                 <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
                   <Mail size={16} className="text-blue-600" />
                 </div>
-                <span className="group-hover:text-blue-600 transition-colors">support@skillbridge.com</span>
+                <span className="group-hover:text-blue-600 transition-colors">amritsingh5356@gmail.com</span>
               </div>
               
               <div className="flex items-center gap-3 text-sm text-slate-600 group">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
                   <Phone size={16} className="text-blue-600" />
                 </div>
-                <span className="group-hover:text-blue-600 transition-colors">+91 98765 43210</span>
+                <span className="group-hover:text-blue-600 transition-colors">+91 9693 625802</span>
               </div>
               
               <div className="flex items-center gap-3 text-sm text-slate-600 group">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
                   <MapPin size={16} className="text-blue-600" />
                 </div>
-                <span className="group-hover:text-blue-600 transition-colors">Bengaluru, India</span>
+                <span className="group-hover:text-blue-600 transition-colors">Phagwara, India</span>
               </div>
             </div>
           </div>
@@ -90,7 +90,7 @@ const Footer = () => {
                 <li key={link.to}>
                   <NavLink
                     to={link.to}
-                    className="text-sm text-slate-600 hover:text-blue-600 transition-colors hover:translate-x-1 inline-block"
+                    className="text-sm text-slate-600 hover:text-blue-600 transition duration-300 hover:translate-x-1 inline-block"
                   >
                     {link.label}
                   </NavLink>
@@ -109,7 +109,7 @@ const Footer = () => {
                 <li key={link.to}>
                   <NavLink
                     to={link.to}
-                    className="text-sm text-slate-600 hover:text-blue-600 transition-colors hover:translate-x-1 inline-block"
+                    className="text-sm text-slate-600 hover:text-blue-600 transition duration-300 hover:translate-x-1 inline-block"
                   >
                     {link.label}
                   </NavLink>

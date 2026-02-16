@@ -55,7 +55,7 @@ const Hero = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 justify-center lg:justify-start mb-10 animate-slide-up-delayed-2">
               <NavLink
-                to="/courses"
+                to="/courses" onClick={() => scroll(0,0)}
                 className="group relative inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium px-7 py-3.5 rounded-full text-sm transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 hover:scale-105"
               >
                 <BookOpen size={18} />
@@ -64,7 +64,7 @@ const Hero = () => {
               </NavLink>
 
               <NavLink
-                to="/ai"
+                to="/ai" onClick={() => scrollTo(0,0)}
                 className="group inline-flex items-center gap-2 border-2 border-slate-200 hover:border-blue-500 bg-white text-slate-700 hover:text-blue-600 px-7 py-3.5 rounded-full text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:scale-105"
               >
                 <Sparkles size={18} className="text-blue-500" />

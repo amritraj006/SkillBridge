@@ -1,5 +1,6 @@
 
 import { GraduationCap, Monitor, BarChart2, Sparkles, ArrowRight, CheckCircle2 } from "lucide-react";
+import { useAppContext } from "../../contexts/AppContext";
 
 const features = [
   {
@@ -26,6 +27,7 @@ const features = [
 ];
 
 const Features = () => {
+  const {totalUsers} = useAppContext();
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/30 to-white py-20 lg:py-28">
       {/* Background decorative elements */}
@@ -105,7 +107,7 @@ const Features = () => {
         <div className="relative mt-16 lg:mt-20 text-center">
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-white rounded-full border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-200 transition-all duration-300 group cursor-pointer">
             <span className="text-sm font-medium text-slate-700 group-hover:text-blue-600">
-              Join 50,000+ learners already growing with us
+              Join {totalUsers}+ learners already growing with us
             </span>
             <ArrowRight size={16} className="text-blue-600 group-hover:translate-x-1 transition-transform" />
           </div>

@@ -35,16 +35,12 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
        <NavLink to="/" onClick={() => scrollTo(0,0)} className="flex items-center gap-2 shrink-0">
-  <img 
-    src="/logo2.svg" 
-    alt="SkillBridge" 
-    className="h-10 w-10" 
-  />
-  <span className="text-2xl font-bold tracking-tight">
-    <span className="text-slate-900">Skill</span>
-    <span className="text-blue-600">Bridge</span>
-  </span>
-</NavLink>
+       <img src="/logo2.svg" alt="SkillBridge" className="h-10 w-10" />
+       <span className="text-2xl font-bold tracking-tight">
+        <span className="text-slate-900">Skill</span>
+        <span className="text-blue-600">Bridge</span>
+      </span>
+      </NavLink>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:gap-8 lg:gap-12">
