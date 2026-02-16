@@ -29,7 +29,7 @@ const ProfileTab = ({ loading, userDetails, onEdit, showValue, formatAddress }) 
           <img
             src={userDetails.image}
             alt={userDetails.name}
-            className="w-20 h-20 rounded-xl object-cover"
+            className="w-20 h-20 rounded-full object-cover"
           />
           <div>
             <h2 className="text-xl font-bold text-slate-900">
