@@ -36,3 +36,16 @@ export const toggleCartApi = async ({ userId, courseId }) => {
 
   return res.data;
 };
+
+export const paymentSuccessApi = async (clerkId) => {
+  try {
+    const res = await api.post(`/api/user/payment-success`, {
+      clerkId,
+    });
+
+    return res.data;
+  } catch (error) {
+    console.error("Error in payment success:", error);
+    throw error;
+  }
+};

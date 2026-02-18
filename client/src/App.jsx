@@ -9,14 +9,17 @@ import About from './pages/About'
 import Dashboard from './pages/Dashboard'
 import { useLocation } from 'react-router-dom'
 import { Toaster } from "react-hot-toast";
+import Cart from './pages/Cart'
+import Payment from './pages/Payment'
 
 
 const App = () => {
   const location = useLocation();
   const isDashboardPage = location.pathname.includes("dashboard");
+  const isPaymentPage = location.pathname.includes("payment");
   return (
     <>
-      {!isDashboardPage && <Navbar />}
+      {!isDashboardPage && !isPaymentPage && <Navbar />}
       <Toaster />
       <Routes>
         <Route path='/' element={<Home/>}/>
@@ -25,8 +28,10 @@ const App = () => {
         <Route path='/ai' element={<RoadmapGenerator />} />
         <Route path='/about' element={<About />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/cart' element={<Cart />}/>
+        <Route path='/payment' element={<Payment />} />
       </Routes>
-      {!isDashboardPage && <Footer />}
+      {!isDashboardPage && !isPaymentPage && <Footer />}
     </>
   )
 }

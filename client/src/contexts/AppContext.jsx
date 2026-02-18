@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useUser } from "@clerk/clerk-react";
 import { getAllCourses } from "../api/courseApi";
 import { getAllUsers } from "../api/userApi";
 import { getCart, toggleCartApi } from "../api/userApi";
-import { useUser } from "@clerk/clerk-react";
 
 const AppContext = createContext(null);
 
@@ -19,7 +19,7 @@ export const AppProvider = ({ children }) => {
   const [loadingCart, setLoadingCart] = useState(false);
   const [togglingId, setTogglingId] = useState(null);
 
-  // ✅ Fetch courses once
+  // ✅ Fetch courses
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -33,7 +33,7 @@ export const AppProvider = ({ children }) => {
     fetchCourses();
   }, []);
 
-  // ✅ Filter courses whenever query changes
+  // ✅ Filter courses
   useEffect(() => {
     if (!searchQuery.trim()) {
       setFilteredCourses([]);
@@ -49,7 +49,7 @@ export const AppProvider = ({ children }) => {
 
   const totalCourses = courses.length;
 
-  // ✅ Fetch all users (admin)
+  // ✅ Fetch all users
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
@@ -65,16 +65,16 @@ export const AppProvider = ({ children }) => {
 
   const totalUsers = users.length;
 
-  // ✅ Fetch cart when user logs in
+  // ✅ Fetch cart for navbar count
   const fetchCart = async () => {
     if (!isSignedIn || !user?.id) return;
 
     try {
       setLoadingCart(true);
-      const data = await getCart(user.id);
 
-      // store only course ids
-      const ids = (data.cartCourses || []).map((c) => c._id);
+      const data = await getCart(user.id); // array of full items
+
+      const ids = Array.isArray(data) ? data.map((c) => c._id) : [];
       setCart(ids);
     } catch (error) {
       console.log("Error fetching cart:", error);
@@ -87,7 +87,7 @@ export const AppProvider = ({ children }) => {
     fetchCart();
   }, [isSignedIn, user?.id]);
 
-  // ✅ Toggle cart (Add/Remove)
+  // ✅ Toggle cart
   const toggleCart = async (courseId) => {
     if (!isSignedIn || !user?.id) {
       alert("Please login first!");
@@ -97,7 +97,7 @@ export const AppProvider = ({ children }) => {
     try {
       setTogglingId(courseId);
 
-      const res = await toggleCartApi({
+      await toggleCartApi({
         userId: user.id,
         courseId,
       });
@@ -108,8 +108,6 @@ export const AppProvider = ({ children }) => {
         if (exists) return prev.filter((id) => id !== courseId);
         return [...prev, courseId];
       });
-
-      return res;
     } catch (error) {
       console.log("toggleCart error:", error);
       alert("Cart update failed!");
@@ -117,6 +115,18 @@ export const AppProvider = ({ children }) => {
       setTogglingId(null);
     }
   };
+
+  const refreshCart = async (userId) => {
+  setLoadingCart(true);
+  try {
+    const data = await getCart(userId);
+    setCart(data);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setLoadingCart(false);
+  }
+};
 
   const cartCount = cart.length;
 
@@ -129,12 +139,13 @@ export const AppProvider = ({ children }) => {
         totalCourses,
         totalUsers,
 
-        // ✅ cart values
+        // ✅ cart
         cart,
         cartCount,
         loadingCart,
         togglingId,
         toggleCart,
+        refreshCart,
         fetchCart,
       }}
     >

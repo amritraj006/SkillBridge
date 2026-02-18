@@ -23,7 +23,7 @@ const CourseCard = ({ course }) => {
 
   return (
     <div 
-      onClick={() => navigate(`/courses/${course._id}`)}
+      onClick={() => {navigate(`/courses/${course._id}`);scrollTo(0,0)}}
       className="group bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 cursor-pointer"
     >
       {/* Image Container */}
