@@ -30,7 +30,6 @@ export const getAllUsers = async (req, res) => {
 }
 
 
-
 export const getCart = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -54,6 +53,7 @@ export const getCart = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 export const toggleCart = async (req, res) => {
   try {

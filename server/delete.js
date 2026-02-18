@@ -17,8 +17,8 @@ const connectDB = async () => {
 
 const deleteAllCourse = async () => {
     try {
-            await Course.deleteMany({});
-            console.log("Existing courses cleared");
+      await Course.deleteMany({});
+      console.log("Existing courses cleared");
     } catch(error) {
         console.error(error);
     }

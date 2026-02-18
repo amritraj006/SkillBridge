@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useUser } from "@clerk/clerk-react";
 import { Trash2, Send, History, Sparkles, Loader2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 import { generateRoadmap, getRoadmapHistory, deleteRoadmap, deleteAllRoadmaps } from "../api/roadmapApi";
 
@@ -35,31 +36,42 @@ const RoadmapGenerator = () => {
   }, [userId]);
 
   // Generate roadmap
-  const handleGenerate = async () => {
-    if (!topic.trim()) return;
+ const handleGenerate = async () => {
+  if (!topic.trim()) {
+    toast.error("Please enter a topic");
+    return;
+  }
 
-    try {
-      setLoading(true);
-      setRoadmap("");
+  if (!user) {
+    toast.error("Please login to continue");
+    return;
+  }
 
-      const data = await generateRoadmap({
-        userId,
-        userEmail,
-        topic,
-        goal,
-      });
+  try {
+    setLoading(true);
+    setRoadmap("");
 
-      setRoadmap(data.chat.roadmap);
-      setTopic("");
-      setGoal("");
-      setSelectedRoadmapId(data.chat._id);
-      fetchHistory();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const data = await generateRoadmap({
+      userId,
+      userEmail,
+      topic,
+      goal,
+    });
+
+    setRoadmap(data?.chat?.roadmap || "");
+    setTopic("");
+    setGoal("");
+    setSelectedRoadmapId(data?.chat?._id || null);
+
+    toast.success("Roadmap generated successfully!");
+    fetchHistory();
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to generate roadmap");
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Delete one roadmap
   const handleDeleteOne = async (chatId) => {

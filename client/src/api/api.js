@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const isProd = import.meta.env.VITE_NODE === "production";
+const isProd = import.meta.env.VITE_MODE === "production";
 
 const baseURL = isProd
   ? "https://skillbridge-hnae.onrender.com"
