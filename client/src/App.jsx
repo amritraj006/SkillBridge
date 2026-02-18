@@ -8,6 +8,7 @@ import RoadmapGenerator from './pages/RoadmapGenerator'
 import About from './pages/About'
 import Dashboard from './pages/Dashboard'
 import { useLocation } from 'react-router-dom'
+import { Toaster } from "react-hot-toast";
 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
   return (
     <>
       {!isDashboardPage && <Navbar />}
+      <Toaster />
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path="/courses" element={<AllCourse />} />

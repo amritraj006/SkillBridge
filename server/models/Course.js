@@ -30,25 +30,23 @@ const courseSchema = new mongoose.Schema(
       },
     ],
 
-    // ✅ Teacher reference (Clerk teacher id)
+    // Teacher id (simple)
     createdBy: { type: String, required: true },
 
-    // ✅ Students stats
-    totalEnrolled: { type: Number, default: 0 },
+    // ✅ Admin approval system
+    isApproved: { type: Boolean, default: false },
+    approvedAt: { type: Date, default: null },
 
-    // ✅ Course Revenue
+    totalEnrolled: { type: Number, default: 0 },
     totalRevenue: { type: Number, default: 0 },
 
-    // ✅ Optional: store enrolled students (recommended)
     enrolledStudents: [
       {
-        studentClerkId: { type: String, required: true },
+        studentId: { type: String, required: true },
         studentEmail: { type: String, required: true },
         enrolledAt: { type: Date, default: Date.now },
       },
     ],
-
-    isPublished: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

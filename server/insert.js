@@ -30,7 +30,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=dGcsHMXbSOA",
     notes: [{ title: "React Basics Notes", fileUrl: "https://example.com/react-basics.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -45,7 +45,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1555066937-4365d14bab8c?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=7CqJlxBYj-M",
     notes: [{ title: "Next.js Notes", fileUrl: "https://example.com/nextjs.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -60,7 +60,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=4deVCNJq3qc",
     notes: [{ title: "Vue.js Notes", fileUrl: "https://example.com/vue.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -75,7 +75,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=3qBXWUpoPHo",
     notes: [{ title: "Angular Notes", fileUrl: "https://example.com/angular.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -90,7 +90,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=mU6anWqZJcc",
     notes: [{ title: "HTML CSS Notes", fileUrl: "https://example.com/html-css.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -105,7 +105,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=PkZNo7MFNFg",
     notes: [{ title: "JavaScript Notes", fileUrl: "https://example.com/js.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
 
@@ -122,7 +122,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=Oe421EPjeBE",
     notes: [{ title: "Express Notes", fileUrl: "https://example.com/express.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -137,7 +137,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1526379095098-400a3a224a7a?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=F5mRW0jo-U4",
     notes: [{ title: "Django Notes", fileUrl: "https://example.com/django.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -152,7 +152,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=9SGDpanrc8U",
     notes: [{ title: "Spring Boot Notes", fileUrl: "https://example.com/spring.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -167,7 +167,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1623479322729-28b25c16b011?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=YS4e4q9oBaU",
     notes: [{ title: "Go Notes", fileUrl: "https://example.com/go.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -182,7 +182,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1523803326055-72a13a0c7d63?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=ImtZ5yENzgU",
     notes: [{ title: "Laravel Notes", fileUrl: "https://example.com/laravel.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -197,7 +197,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=ed8SzALpx1Q",
     notes: [{ title: "GraphQL Notes", fileUrl: "https://example.com/graphql.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
 
@@ -214,7 +214,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=LHBE6Q9XlzI",
     notes: [{ title: "Python Data Science Notes", fileUrl: "https://example.com/pydata.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -229,7 +229,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=Gv9_4yMHFhI",
     notes: [{ title: "ML Notes", fileUrl: "https://example.com/ml.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -244,7 +244,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=VyWAvY2CF9c",
     notes: [{ title: "Deep Learning Notes", fileUrl: "https://example.com/dl.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
 
@@ -261,7 +261,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=Ia-UEYYR44s",
     notes: [{ title: "AWS Notes", fileUrl: "https://example.com/aws.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -276,7 +276,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1605745341112-85968b19335b?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=X48VuDVv0do",
     notes: [{ title: "Docker Notes", fileUrl: "https://example.com/docker.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -291,7 +291,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=NKEFWyqJ5XA",
     notes: [{ title: "Azure Notes", fileUrl: "https://example.com/azure.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
 
@@ -308,7 +308,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=0-S5a0eXPoc",
     notes: [{ title: "React Native Notes", fileUrl: "https://example.com/rn.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -323,7 +323,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=VPvVD8t02U8",
     notes: [{ title: "Flutter Notes", fileUrl: "https://example.com/flutter.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -338,7 +338,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1618389041494-8fab89c3f22b?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=09TeUXjzpKs",
     notes: [{ title: "iOS Notes", fileUrl: "https://example.com/ios.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
 
@@ -355,7 +355,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=hQcFE0RD0cQ",
     notes: [{ title: "DevOps Notes", fileUrl: "https://example.com/devops.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -370,7 +370,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=7xngnjfIlK4",
     notes: [{ title: "Terraform Notes", fileUrl: "https://example.com/terraform.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -385,7 +385,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=6YZvp2GwT0A",
     notes: [{ title: "Jenkins Notes", fileUrl: "https://example.com/jenkins.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
 
@@ -402,7 +402,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=3Kq1MIfTWCE",
     notes: [{ title: "Ethical Hacking Notes", fileUrl: "https://example.com/hacking.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -417,7 +417,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=J4wKU6Vn4KQ",
     notes: [{ title: "Network Security Notes", fileUrl: "https://example.com/network.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
 
@@ -434,7 +434,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1623479322729-28b25c16b011?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=VELru-FCWDM",
     notes: [{ title: "MongoDB Notes", fileUrl: "https://example.com/mongodb.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -449,7 +449,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=zw4s3Ey8AYM",
     notes: [{ title: "SQL Notes", fileUrl: "https://example.com/sql.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
 
@@ -466,7 +466,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=FTFaQWZBqQ8",
     notes: [{ title: "Figma Notes", fileUrl: "https://example.com/figma.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -481,7 +481,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=J_uvMvU5n7M",
     notes: [{ title: "UX Notes", fileUrl: "https://example.com/ux.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
 
@@ -498,7 +498,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1557838923-2985c318be48?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=lx3xNsUvQbA",
     notes: [{ title: "Marketing Notes", fileUrl: "https://example.com/marketing.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
   {
@@ -513,7 +513,7 @@ const sampleCourses = [
     thumbnailUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
     youtubeUrl: "https://www.youtube.com/watch?v=tuDnIq7Qk6A",
     notes: [{ title: "PM Notes", fileUrl: "https://example.com/pm.pdf" }],
-    createdBy: "admin_123",
+    createdBy: "user_39hQwF1quvp25HnBqyqetd58xA4",
     isPublished: true,
   },
 ];

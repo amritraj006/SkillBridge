@@ -1,8 +1,51 @@
 import express from "express";
-const Router = express.Router();
-import { getAllCourses, courseById } from "../controllers/courseController.js";
+import {
+  createCourse,
+  getAllCourses,
+  courseById,
+  approveCourse,
+  getPendingCourses,
+  getTeacherAllCourses,
+  getTeacherApprovedCourses,
+  getTeacherPendingCourses,
+} from "../controllers/courseController.js";
 
-Router.get("/", getAllCourses);
-Router.get("/:id", courseById);
+const router = express.Router();
 
-export default Router;
+/* ===========================
+   TEACHER ROUTES
+=========================== */
+
+// ✅ Teacher creates course
+router.post("/create", createCourse);
+
+// ✅ Teacher: all courses
+router.get("/teacher/:teacherId/all", getTeacherAllCourses);
+
+// ✅ Teacher: pending courses
+router.get("/teacher/:teacherId/pending", getTeacherPendingCourses);
+
+// ✅ Teacher: approved courses
+router.get("/teacher/:teacherId/approved", getTeacherApprovedCourses);
+
+/* ===========================
+   ADMIN ROUTES
+=========================== */
+
+// ✅ Admin: pending courses
+router.get("/pending", getPendingCourses);
+
+// ✅ Admin: approve course
+router.put("/approve/:courseId", approveCourse);
+
+/* ===========================
+   STUDENT ROUTES
+=========================== */
+
+// ✅ Students see only approved courses
+router.get("/", getAllCourses);
+
+// ✅ Student opens only approved course
+router.get("/:id", courseById);
+
+export default router;
