@@ -13,29 +13,10 @@ dotenv.config();
 
 const app = express();
 
-// ✅ ENV check
-const isProd = process.env.NODE_ENV === "production";
-
-const allowedOrigins = isProd
-  ? [
-      "https://skillbridge-1-ggdj.onrender.com", // frontend
-      "admin-url", // replace with real admin url
-    ]
-  : ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:5176"];
-
-// ✅ Verification logs
-console.log("🔍 NODE_ENV:", process.env.NODE_ENV);
-console.log("🌍 CORS Mode:", isProd ? "PRODUCTION" : "DEVELOPMENT");
-console.log("✅ Allowed Origins:", allowedOrigins);
-
-// ✅ Middlewares
-app.use(
-  cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: "*",
+  credentials: true
+}));
 
 app.use(express.json());
 
