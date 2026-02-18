@@ -9,8 +9,10 @@ import {
   Sparkles, GraduationCap, Tag
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useUser } from "@clerk/clerk-react";
 
 const CourseDetails = () => {
+  const { user } = useUser();
   const { id } = useParams();
   const navigate = useNavigate();
   const { cart, toggleCart, togglingId } = useAppContext();
@@ -45,10 +47,25 @@ const CourseDetails = () => {
   }, [id]);
 
   const handleToggleCart = async () => {
+    // Check if user is logged in first
+    if (!user) {
+      toast.error("Please login to continue", {
+        icon: '🔐',
+        style: {
+          borderRadius: '12px',
+          background: '#2563eb',
+          color: '#fff',
+          fontWeight: '500',
+        },
+        duration: 3000,
+      });
+      return;
+    }
+
     try {
       await toggleCart(course._id);
       
-      toast[cart.includes(id) ? 'success' : 'success'](
+      toast.success(
         cart.includes(id) ? "Removed from cart" : "Added to cart successfully!",
         {
           icon: cart.includes(id) ? '🗑️' : '🛒',
