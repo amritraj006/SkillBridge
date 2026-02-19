@@ -18,6 +18,7 @@ const App = () => {
   const location = useLocation();
   const isDashboardPage = location.pathname.includes("dashboard");
   const isPaymentPage = location.pathname.includes("payment");
+  const isCoursePage = location.pathname.includes("course");
   return (
     <>
       {!isDashboardPage && !isPaymentPage && <Navbar />}
@@ -33,7 +34,7 @@ const App = () => {
         <Route path='/payment' element={<Payment />} />
         <Route path="/course/learning/:id" element={<Learning />} />
       </Routes>
-      {!isDashboardPage && !isPaymentPage && <Footer />}
+      {!isDashboardPage && !isPaymentPage && !isCoursePage && <Footer />}
     </>
   )
 }
