@@ -7,7 +7,7 @@ import { inngest, functions } from "./inngest/index.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import roadmapRoutes from "./routes/roadmapRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-
+import morgan from "morgan";
 
 dotenv.config();
 
@@ -19,6 +19,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(morgan("dev"));
 
 // ✅ Routes
 app.use("/api/inngest", serve({ client: inngest, functions }));
