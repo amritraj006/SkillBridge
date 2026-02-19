@@ -86,6 +86,7 @@ const CoursesTab = ({ onBrowse }) => {
         {myCourses.map((course) => (
           <PurchasedCourseCard key={course._id} course={course} />
         ))}
+        
       </div>
     </div>
   );

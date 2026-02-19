@@ -64,7 +64,6 @@ export const getCart = async (req, res) => {
   }
 };
 
-
 export const toggleCart = async (req, res) => {
   try {
     const { userId, courseId } = req.body;
