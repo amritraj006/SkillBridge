@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom'
 import { Toaster } from "react-hot-toast";
 import Cart from './pages/Cart'
 import Payment from './pages/Payment'
+import Learning from './pages/Learning'
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/cart' element={<Cart />}/>
         <Route path='/payment' element={<Payment />} />
+        <Route path="/course/learning/:id" element={<Learning />} />
       </Routes>
       {!isDashboardPage && !isPaymentPage && <Footer />}
     </>

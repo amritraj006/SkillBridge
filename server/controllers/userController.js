@@ -32,7 +32,6 @@ export const getAllUsers = async (req, res) => {
   }
 }
 
-
 export const getCart = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -222,4 +221,22 @@ export const paymentSuccess = async (req, res) => {
     console.log("paymentSuccess error:", error);
     return res.status(500).json({ message: "Server error", error });
   }
+};
+
+export const getPurchasedCourses = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await User.findById(userId).select("purchasedCourses");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(user.purchasedCourses); // returns array of course ObjectIds
+  } catch (error) {
+    console.error("Error fetching purchased courses:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+  
 };

@@ -49,3 +49,10 @@ export const paymentSuccessApi = async (clerkId) => {
     throw error;
   }
 };
+
+
+
+export const getPurchasedCourses = async (userId) => {
+  const res = await api.get(`/api/user/${userId}/purchased-courses`);
+  return res.data; // array of ids
+};

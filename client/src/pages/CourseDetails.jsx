@@ -2,14 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getCourseById } from "../api/courseApi";
 import { useAppContext } from "../contexts/AppContext";
-import { 
-  BookOpen, Clock, Users, Award, 
-  ChevronLeft, ShoppingCart, Trash2,
-  AlertCircle, Loader2, Calendar,
-  Sparkles, GraduationCap, Tag
+import {
+  BookOpen,
+  Clock,
+  Users,
+  Award,
+  ChevronLeft,
+  ShoppingCart,
+  Trash2,
+  AlertCircle,
+  Loader2,
+  Sparkles,
+  GraduationCap,
+  Tag,
+  Lock,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useUser } from "@clerk/clerk-react";
+import axios from "axios";
+import { getPurchasedCourses } from "../api/userApi";
 
 const CourseDetails = () => {
   const { user } = useUser();
@@ -21,13 +32,21 @@ const CourseDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // ✅ purchased logic
+  const [purchasedIds, setPurchasedIds] = useState([]);
+  const [checkingPurchased, setCheckingPurchased] = useState(false);
+
+  // ==========================
+  // Fetch course details
+  // ==========================
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         setLoading(true);
         setError(null);
+
         const response = await getCourseById(id);
-        
+
         if (!response) {
           setError("Course not found.");
           toast.error("Course not found");
@@ -46,50 +65,33 @@ const CourseDetails = () => {
     fetchCourse();
   }, [id]);
 
-  const handleToggleCart = async () => {
-    // Check if user is logged in first
-    if (!user) {
-      toast.error("Please login to continue", {
-        icon: '🔐',
-        style: {
-          borderRadius: '12px',
-          background: '#2563eb',
-          color: '#fff',
-          fontWeight: '500',
-        },
-        duration: 3000,
-      });
-      return;
-    }
+  // ==========================
+  // Fetch purchased courses
+  // ==========================
+useEffect(() => {
+  const fetchPurchasedCourses = async () => {
+    if (!user) return;
 
     try {
-      await toggleCart(course._id);
-      
-      toast.success(
-        cart.includes(id) ? "Removed from cart" : "Added to cart successfully!",
-        {
-          icon: cart.includes(id) ? '🗑️' : '🛒',
-          style: {
-            borderRadius: '12px',
-            background: cart.includes(id) ? '#1e293b' : '#2563eb',
-            color: '#fff',
-            fontWeight: '500',
-          },
-          duration: 2000,
-        }
-      );
-    } catch (error) {
-      toast.error("Something went wrong", {
-        icon: '❌',
-        style: {
-          borderRadius: '12px',
-          background: '#ef4444',
-          color: '#fff',
-        },
-      });
+      setCheckingPurchased(true);
+
+      const data = await getPurchasedCourses(user.id);
+
+      const ids = data.map((x) => x.toString());
+      setPurchasedIds(ids);
+    } catch (err) {
+      console.error("Error fetching purchased courses:", err);
+    } finally {
+      setCheckingPurchased(false);
     }
   };
 
+  fetchPurchasedCourses();
+}, [user]);
+
+  // ==========================
+  // Helpers
+  // ==========================
   const formatNumber = (num) => {
     if (!num) return "0";
     return num.toLocaleString();
@@ -97,6 +99,76 @@ const CourseDetails = () => {
 
   const inCart = cart.includes(id);
 
+  // ✅ purchased check
+  const isPurchased = course?._id
+    ? purchasedIds.includes(course._id.toString())
+    : false;
+
+  // ==========================
+  // Toggle cart
+  // ==========================
+  const handleToggleCart = async () => {
+    // Check if user is logged in first
+    if (!user) {
+      toast.error("Please login to continue", {
+        icon: "🔐",
+        style: {
+          borderRadius: "12px",
+          background: "#2563eb",
+          color: "#fff",
+          fontWeight: "500",
+        },
+        duration: 3000,
+      });
+      return;
+    }
+
+    // ✅ if purchased, block cart
+    if (isPurchased) {
+      toast("You already purchased this course 🎓", {
+        icon: "🔒",
+        style: {
+          borderRadius: "12px",
+          background: "#0f172a",
+          color: "#fff",
+          fontWeight: "500",
+        },
+        duration: 2500,
+      });
+      return;
+    }
+
+    try {
+      await toggleCart(course._id);
+
+      toast.success(
+        cart.includes(id) ? "Removed from cart" : "Added to cart successfully!",
+        {
+          icon: cart.includes(id) ? "🗑️" : "🛒",
+          style: {
+            borderRadius: "12px",
+            background: cart.includes(id) ? "#1e293b" : "#2563eb",
+            color: "#fff",
+            fontWeight: "500",
+          },
+          duration: 2000,
+        }
+      );
+    } catch (error) {
+      toast.error("Something went wrong", {
+        icon: "❌",
+        style: {
+          borderRadius: "12px",
+          background: "#ef4444",
+          color: "#fff",
+        },
+      });
+    }
+  };
+
+  // ==========================
+  // UI STATES
+  // ==========================
   if (loading) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
@@ -107,7 +179,9 @@ const CourseDetails = () => {
               <BookOpen size={24} className="text-blue-600" />
             </div>
           </div>
-          <p className="mt-4 text-base font-medium text-slate-600">Loading course details</p>
+          <p className="mt-4 text-base font-medium text-slate-600">
+            Loading course details
+          </p>
           <p className="text-sm text-slate-400 mt-1">Please wait a moment</p>
         </div>
       </div>
@@ -121,8 +195,12 @@ const CourseDetails = () => {
           <div className="w-24 h-24 bg-gradient-to-br from-red-50 to-red-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <AlertCircle size={48} className="text-red-500" />
           </div>
-          <h2 className="text-2xl font-bold text-slate-900 mb-3">Course Not Found</h2>
-          <p className="text-slate-500 mb-8">{error || "The course you're looking for doesn't exist."}</p>
+          <h2 className="text-2xl font-bold text-slate-900 mb-3">
+            Course Not Found
+          </h2>
+          <p className="text-slate-500 mb-8">
+            {error || "The course you're looking for doesn't exist."}
+          </p>
           <button
             onClick={() => navigate("/courses")}
             className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium shadow-lg shadow-blue-200"
@@ -135,27 +213,30 @@ const CourseDetails = () => {
     );
   }
 
+  // ==========================
+  // MAIN UI
+  // ==========================
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-        
         {/* Back Button */}
         <button
           onClick={() => navigate("/courses")}
           className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-blue-600 mb-6 group"
         >
           <div className="p-1.5 rounded-lg bg-white border border-slate-200 group-hover:border-blue-200 group-hover:bg-blue-50 transition-all">
-            <ChevronLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
+            <ChevronLeft
+              size={16}
+              className="group-hover:-translate-x-0.5 transition-transform"
+            />
           </div>
           <span>Back to Courses</span>
         </button>
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
-          
           {/* Left Column - Course Info */}
           <div className="lg:col-span-2 space-y-6">
-            
             {/* Title Card */}
             <div className="bg-white rounded-2xl border border-slate-200 p-6 lg:p-8 shadow-sm">
               <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -163,22 +244,34 @@ const CourseDetails = () => {
                   <Tag size={12} />
                   {course.category || "Course"}
                 </span>
+
                 {course.level && (
                   <span className="px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-medium rounded-full border border-purple-200 flex items-center gap-1.5">
                     <GraduationCap size={12} />
                     {course.level}
                   </span>
                 )}
+
+                {/* ✅ Purchased Badge */}
+                {user && isPurchased && (
+                  <span className="px-3 py-1.5 bg-green-50 text-green-700 text-xs font-semibold rounded-full border border-green-200 flex items-center gap-1.5">
+                    <Award size={12} />
+                    Purchased
+                  </span>
+                )}
               </div>
-              
+
               <h1 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-slate-900 leading-tight">
                 {course.title}
               </h1>
-              
+
               {course.instructor && (
                 <p className="mt-3 text-slate-500 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
-                  Created by <span className="font-medium text-slate-700">{course.instructor}</span>
+                  Created by{" "}
+                  <span className="font-medium text-slate-700">
+                    {course.instructor}
+                  </span>
                 </p>
               )}
             </div>
@@ -210,7 +303,6 @@ const CourseDetails = () => {
           {/* Right Column - Sticky Card */}
           <div className="lg:col-span-1">
             <div className="sticky top-6 space-y-6">
-              
               {/* Price Card */}
               <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
                 <div className="text-center pb-6 border-b border-slate-100">
@@ -218,7 +310,9 @@ const CourseDetails = () => {
                     {course.price === 0 ? "Free" : `₹${course.price}`}
                   </div>
                   {course.price > 0 && (
-                    <p className="text-xs text-slate-400 mt-2">One-time payment • Lifetime access</p>
+                    <p className="text-xs text-slate-400 mt-2">
+                      One-time payment • Lifetime access
+                    </p>
                   )}
                 </div>
 
@@ -229,7 +323,9 @@ const CourseDetails = () => {
                       <Clock size={16} className="text-blue-600" />
                       <span className="text-sm">Duration</span>
                     </div>
-                    <span className="font-medium text-slate-900">{course.duration || "Self-paced"}</span>
+                    <span className="font-medium text-slate-900">
+                      {course.duration || "Self-paced"}
+                    </span>
                   </div>
 
                   <div className="flex items-center justify-between">
@@ -268,14 +364,30 @@ const CourseDetails = () => {
                 {/* Cart Button */}
                 <button
                   onClick={handleToggleCart}
-                  disabled={togglingId === course._id}
-                  className={`w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-base transition-all shadow-lg ${
-                    inCart
-                      ? "bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white shadow-red-200"
-                      : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-blue-200"
-                  } disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]`}
+                  disabled={
+                    togglingId === course._id || isPurchased || checkingPurchased
+                  }
+                  className={`w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-base transition-all shadow-lg
+                    ${
+                      isPurchased
+                        ? "bg-slate-300 text-slate-700 cursor-not-allowed"
+                        : inCart
+                        ? "bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white shadow-red-200"
+                        : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-blue-200"
+                    }
+                    disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]`}
                 >
-                  {togglingId === course._id ? (
+                  {checkingPurchased ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      Checking...
+                    </>
+                  ) : isPurchased ? (
+                    <>
+                      <Lock size={18} />
+                      Locked (Already Purchased)
+                    </>
+                  ) : togglingId === course._id ? (
                     <>
                       <Loader2 size={18} className="animate-spin" />
                       Updating...
@@ -304,7 +416,10 @@ const CourseDetails = () => {
                     ))}
                   </div>
                   <p className="text-xs text-slate-500">
-                    <span className="font-semibold text-slate-700">{course.totalEnrolled}+</span> students enrolled
+                    <span className="font-semibold text-slate-700">
+                      {course.totalEnrolled || 0}+
+                    </span>{" "}
+                    students enrolled
                   </p>
                 </div>
 
@@ -319,6 +434,17 @@ const CourseDetails = () => {
             </div>
           </div>
         </div>
+
+        {/* Extra Note */}
+        {user && isPurchased && (
+          <div className="mt-8 max-w-7xl mx-auto">
+            <div className="bg-green-50 border border-green-200 rounded-2xl p-5 text-green-800 text-sm font-medium flex items-center gap-2">
+              <Award size={18} />
+              You already purchased this course. You can access it anytime from
+              your dashboard.
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

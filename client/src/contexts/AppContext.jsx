@@ -138,7 +138,7 @@ export const AppProvider = ({ children }) => {
         filteredCourses,
         totalCourses,
         totalUsers,
-
+        courses,
         // ✅ cart
         cart,
         cartCount,
