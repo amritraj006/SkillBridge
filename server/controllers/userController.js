@@ -126,10 +126,10 @@ export const paymentSuccess = async (req, res) => {
       return res.status(400).json({ message: "clerkId is required" });
     }
 
-    // ✅ user with cart populated
+    // ✅ Find user (cart populated)
     const user = await User.findById(clerkId).populate({
       path: "cartCourses.course",
-      select: "title price thumbnailUrl duration",
+      select: "title price thumbnailUrl duration availableSlots totalSlots",
     });
 
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -138,32 +138,74 @@ export const paymentSuccess = async (req, res) => {
       return res.status(400).json({ message: "Cart is empty" });
     }
 
-    // ✅ Store cart items BEFORE clearing
+    // ✅ Store cart courses before clearing
     const cartCourses = user.cartCourses
       .map((item) => item.course)
       .filter(Boolean);
 
     const cartCourseIds = cartCourses.map((c) => c._id);
 
-    const totalAmount = cartCourses.reduce((sum, c) => sum + (c.price || 0), 0);
+    // ✅ existing purchased set
+    const purchasedSet = new Set(
+      (user.purchasedCourses || []).map((id) => id.toString())
+    );
 
-    // ✅ Add to purchasedCourses (avoid duplicates)
-    const purchasedSet = new Set(user.purchasedCourses.map((id) => id.toString()));
+    // ✅ only new courses (not already purchased)
+    const newlyPurchasedCourses = cartCourses.filter(
+      (c) => !purchasedSet.has(c._id.toString())
+    );
 
-    cartCourseIds.forEach((id) => {
-      if (!purchasedSet.has(id.toString())) {
-        user.purchasedCourses.push(id);
-      }
+    if (newlyPurchasedCourses.length === 0) {
+      // still clear cart (optional)
+      user.cartCourses = [];
+      await user.save();
+
+      return res.status(200).json({
+        message: "Cart cleared. No new courses were purchased (already owned).",
+        purchasedCount: 0,
+        totalAmount: 0,
+      });
+    }
+
+    // ✅ check slots before purchase
+    const noSlotsCourses = newlyPurchasedCourses.filter(
+      (c) => (c.availableSlots ?? 0) <= 0
+    );
+
+    if (noSlotsCourses.length > 0) {
+      return res.status(400).json({
+        message: "Some courses have no available slots",
+        courses: noSlotsCourses.map((c) => ({
+          id: c._id,
+          title: c.title,
+          availableSlots: c.availableSlots,
+        })),
+      });
+    }
+
+    // ✅ total amount for NEW purchases only
+    const totalAmount = newlyPurchasedCourses.reduce(
+      (sum, c) => sum + (c.price || 0),
+      0
+    );
+
+    // ✅ Push newly purchased into user.purchasedCourses
+    newlyPurchasedCourses.forEach((c) => {
+      user.purchasedCourses.push(c._id);
     });
 
     // ✅ Clear cart
     user.cartCourses = [];
     await user.save();
 
-    // ✅ update course stats (optional)
-    for (const course of cartCourses) {
+    // ✅ Update each course stats
+    for (const course of newlyPurchasedCourses) {
       await Course.findByIdAndUpdate(course._id, {
-        $inc: { totalEnrolled: 1, totalRevenue: course.price || 0 },
+        $inc: {
+          totalEnrolled: 1,
+          totalRevenue: course.price || 0,
+          availableSlots: -1, // ✅ slots -1
+        },
         $push: {
           enrolledStudents: {
             studentId: user._id,
@@ -174,8 +216,8 @@ export const paymentSuccess = async (req, res) => {
       });
     }
 
-    // ✅ Email HTML
-    const purchasedHTML = cartCourses
+    // ✅ Email HTML (only newly purchased)
+    const purchasedHTML = newlyPurchasedCourses
       .map(
         (c) => `
         <li style="margin-bottom: 8px;">
@@ -213,9 +255,10 @@ export const paymentSuccess = async (req, res) => {
     });
 
     return res.status(200).json({
-      message: "Payment success. Cart cleared and purchasedCourses updated.",
+      message:
+        "Payment success. Cart cleared, purchasedCourses updated, slots reduced.",
       totalAmount,
-      purchasedCount: cartCourses.length,
+      purchasedCount: newlyPurchasedCourses.length,
     });
   } catch (error) {
     console.log("paymentSuccess error:", error);
