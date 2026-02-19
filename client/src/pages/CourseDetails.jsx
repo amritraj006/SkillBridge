@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useUser } from "@clerk/clerk-react";
-import axios from "axios";
+
 import { getPurchasedCourses } from "../api/userApi";
 
 const CourseDetails = () => {
