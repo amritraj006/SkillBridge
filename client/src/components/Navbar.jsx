@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { UserButton, useUser } from "@clerk/clerk-react";
-import { ShoppingCart, Menu, X, Search } from "lucide-react";
+import { Menu, X, Search, Book, ShoppingBag, ShoppingBagIcon } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
 import SearchResult from "./SearchResult";
@@ -83,7 +83,9 @@ const Navbar = () => {
 {isSignedIn && (
   <div className="relative" onClick={() => navigate("/cart")}>
     <button className="p-2 hover:bg-slate-100 rounded-full transition-colors">
-      <ShoppingCart className="w-5 h-5 text-slate-600 hover:text-blue-600 transition-colors" />
+     
+      <ShoppingBagIcon className="w-5 h-5 text-slate-600 hover:text-blue-600 transition-colors" />
+
     </button>
 
     {cartCount > 0 && (
@@ -177,7 +179,7 @@ const Navbar = () => {
     <span className="text-sm font-medium text-slate-600">Cart</span>
 
     <div className="relative" >
-      <ShoppingCart  className="w-5 h-5 text-slate-600" />
+            <ShoppingBag className="w-5 h-5 text-slate-600"  />
 
       {cartCount > 0 && (
         <span className="absolute -top-2 -right-2 w-5 h-5 bg-blue-600 text-white text-xs font-medium rounded-full flex items-center justify-center">

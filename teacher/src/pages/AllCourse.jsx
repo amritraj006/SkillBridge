@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { getTeacherAllCourses, getTeacherApprovedCourses, getTeacherPendingCourses } from "../api/api";
 import {
   BookOpen, CheckCircle, Clock, PlusCircle,
-  ArrowLeft, Search, Eye, DollarSign,
+  ArrowLeft, Search, DollarSign,
   Grid, List, Loader2, AlertCircle
 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -299,10 +299,7 @@ const CourseItem = ({ course, viewMode, onClick }) => {
           </p>
 
           <div className="flex items-center justify-between mt-2 text-xs">
-            <span className="flex items-center gap-1 text-slate-500">
-              <Eye size={11} />
-              {course.views || 0}
-            </span>
+          
             <span className="font-medium text-blue-600">
               ₹{course.price || 0}
             </span>

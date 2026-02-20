@@ -18,7 +18,7 @@ const CourseCard = ({ course }) => {
 
   const formatPrice = () => {
     if (price === 0 || !price) return "Free";
-    return `$${price}`;
+    return `₹${price}`;
   };
 
   return (

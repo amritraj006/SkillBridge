@@ -10,7 +10,7 @@ import {
   BookOpen, CheckCircle, Clock, DollarSign,
   PlusCircle, LayoutDashboard, TrendingUp,
   AlertCircle, Loader2, ChevronRight, Award,
-  GraduationCap, Sparkles, Eye
+  GraduationCap, Sparkles
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -291,10 +291,7 @@ export default function Dashboard() {
                       
                       {/* Stats */}
                       <div className="flex items-center justify-between text-xs">
-                        <span className="flex items-center gap-1 text-slate-500">
-                          <Eye size={12} />
-                          {course.views || 0}
-                        </span>
+                
                         <span className="flex items-center gap-1 text-blue-600 font-medium">
                           ₹{course.price || 0}
                         </span>
