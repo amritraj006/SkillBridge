@@ -10,8 +10,10 @@ const Navbar = () => {
 
   const navLinks = [
     { to: "/", label: "Home" },
-    { to: "/add-courses", label: "Add Course" },
-    { to: "/dashboard", label: "Dashboard", protected: true },
+    { to: "/add-course", label: "Add Course" },
+    {to: "/my-courses", label: "My Courses"},
+    {to: "/account", label: "Account"}
+    
   ];
 
   // ✅ Filter links based on login

@@ -1,149 +1,194 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { CheckCircle, Users, Settings } from "lucide-react";
 
-export default function App() {
+export default function Dashboard() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+  const [activeTab, setActiveTab] = useState("approve");
+
+  // 🔹 Pending Courses State
   const [pendingCourses, setPendingCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
+  const [approvingId, setApprovingId] = useState(null);
 
-  // ✅ fetch pending courses
+  // ✅ Fetch Pending Courses
   const fetchPendingCourses = async () => {
     try {
       setLoading(true);
-      setMsg("");
-
       const res = await axios.get(`${backendUrl}/api/courses/pending`);
-
       setPendingCourses(res.data.courses || []);
     } catch (error) {
-      console.log(error);
-      setMsg(error.response?.data?.message || "Failed to fetch pending courses");
+      setMsg(error.response?.data?.message || "Failed to fetch courses");
     } finally {
       setLoading(false);
     }
   };
 
-  // ✅ approve course
+  // ✅ Approve Course
   const handleApprove = async (courseId) => {
     try {
+      setApprovingId(courseId);
       setMsg("");
 
       await axios.put(`${backendUrl}/api/courses/approve/${courseId}`);
 
       setMsg("✅ Course Approved Successfully!");
-
-      // refresh pending list
       fetchPendingCourses();
     } catch (error) {
-      console.log(error);
-      setMsg(error.response?.data?.message || "Failed to approve course");
+      setMsg(error.response?.data?.message || "Approval failed");
+    } finally {
+      setApprovingId(null);
     }
   };
 
+  // Fetch only when Approve tab active
   useEffect(() => {
-    fetchPendingCourses();
-  }, []);
+    if (activeTab === "approve") {
+      fetchPendingCourses();
+    }
+  }, [activeTab]);
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "approve":
+        return (
+          <div>
+            <h2 className="text-2xl font-bold mb-6">Approve Requests</h2>
+
+            {msg && (
+              <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
+                {msg}
+              </div>
+            )}
+
+            {loading ? (
+              <p className="text-gray-600">Loading pending courses...</p>
+            ) : pendingCourses.length === 0 ? (
+              <p className="text-green-600 font-semibold">
+                🎉 No pending courses
+              </p>
+            ) : (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {pendingCourses.map((course) => (
+                  <div
+                    key={course._id}
+                    className="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition"
+                  >
+                    <img
+                      src={course.thumbnailUrl}
+                      alt={course.title}
+                      className="w-full h-40 object-cover rounded-lg"
+                    />
+
+                    <h3 className="mt-4 text-lg font-semibold">
+                      {course.title}
+                    </h3>
+
+                    <p className="text-sm text-gray-500 mt-1">
+                      {course.category} • {course.level}
+                    </p>
+
+                    <div className="mt-3 text-sm text-gray-700 space-y-1">
+                      <p><b>Duration:</b> {course.duration}</p>
+                      <p><b>Price:</b> ₹{course.price}</p>
+                      <p><b>Teacher ID:</b> {course.createdBy}</p>
+                    </div>
+
+                    {/* ✅ Checkbox Approve */}
+                    <div className="mt-5 flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        disabled={approvingId === course._id}
+                        onChange={() => handleApprove(course._id)}
+                        className="w-5 h-5 accent-black cursor-pointer disabled:opacity-50"
+                      />
+                      <label className="font-semibold text-gray-700">
+                        {approvingId === course._id
+                          ? "Approving..."
+                          : "Approve Course"}
+                      </label>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+
+      case "users":
+        return (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Users Details</h2>
+            <p className="text-gray-600">
+              Here you will see all registered users. (Coming Soon)
+            </p>
+          </div>
+        );
+
+      case "settings":
+        return (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Settings</h2>
+            <p className="text-gray-600">
+              Update admin settings and configurations here. (Coming Soon)
+            </p>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div style={{ maxWidth: "1100px", margin: "40px auto", padding: "20px" }}>
-      <h1 style={{ fontSize: "30px", fontWeight: "bold" }}>
-        Admin Dashboard
-      </h1>
+    <div className="min-h-screen flex bg-gray-100">
 
-      <p style={{ marginTop: "8px", color: "gray" }}>
-        Approve courses created by teachers
-      </p>
+      {/* Sidebar */}
+      <div className="w-64 bg-white shadow-lg p-6">
+        <h1 className="text-xl font-bold mb-8">Admin Panel</h1>
 
-      {msg && (
-        <p style={{ marginTop: "15px", fontWeight: "bold", color: "green" }}>
-          {msg}
-        </p>
-      )}
+        <nav className="space-y-4">
+          <button
+            onClick={() => setActiveTab("approve")}
+            className={`flex items-center gap-3 w-full p-3 rounded-lg transition 
+              ${activeTab === "approve"
+                ? "bg-black text-white"
+                : "text-gray-700 hover:bg-gray-200"}`}
+          >
+            <CheckCircle size={18} />
+            Approve Requests
+          </button>
 
-      {loading ? (
-        <h3 style={{ marginTop: "30px" }}>Loading pending courses...</h3>
-      ) : pendingCourses.length === 0 ? (
-        <h3 style={{ marginTop: "30px", color: "green" }}>
-          🎉 No pending courses
-        </h3>
-      ) : (
-        <div style={gridStyle}>
-          {pendingCourses.map((course) => (
-            <div key={course._id} style={cardStyle}>
-              <img
-                src={course.thumbnailUrl}
-                alt={course.title}
-                style={imgStyle}
-              />
+          <button
+            onClick={() => setActiveTab("users")}
+            className={`flex items-center gap-3 w-full p-3 rounded-lg transition 
+              ${activeTab === "users"
+                ? "bg-black text-white"
+                : "text-gray-700 hover:bg-gray-200"}`}
+          >
+            <Users size={18} />
+            Users Details
+          </button>
 
-              <h3 style={{ marginTop: "12px", fontSize: "18px" }}>
-                {course.title}
-              </h3>
+          <button
+            onClick={() => setActiveTab("settings")}
+            className={`flex items-center gap-3 w-full p-3 rounded-lg transition 
+              ${activeTab === "settings"
+                ? "bg-black text-white"
+                : "text-gray-700 hover:bg-gray-200"}`}
+          >
+            <Settings size={18} />
+            Settings
+          </button>
+        </nav>
+      </div>
 
-              <p style={{ marginTop: "6px", color: "gray" }}>
-                {course.category} • {course.level}
-              </p>
-
-              <p style={{ marginTop: "10px" }}>
-                <b>Duration:</b> {course.duration}
-              </p>
-
-              <p style={{ marginTop: "6px" }}>
-                <b>Price:</b> ₹{course.price}
-              </p>
-
-              <p style={{ marginTop: "6px" }}>
-                <b>Teacher ID:</b> {course.createdBy}
-              </p>
-
-              <button
-                onClick={() => handleApprove(course._id)}
-                style={btnStyle}
-              >
-                ✅ Approve Course
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Main Content */}
+      <div className="flex-1 p-10">
+        {renderContent()}
+      </div>
     </div>
   );
 }
-
-/* ---------------- Styles ---------------- */
-
-const gridStyle = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(270px, 1fr))",
-  gap: "18px",
-  marginTop: "20px",
-};
-
-const cardStyle = {
-  background: "white",
-  border: "1px solid #ddd",
-  borderRadius: "12px",
-  padding: "15px",
-  boxShadow: "0px 4px 10px rgba(0,0,0,0.08)",
-};
-
-const imgStyle = {
-  width: "100%",
-  height: "150px",
-  objectFit: "cover",
-  borderRadius: "10px",
-};
-
-const btnStyle = {
-  width: "100%",
-  marginTop: "15px",
-  padding: "10px",
-  background: "black",
-  color: "white",
-  border: "none",
-  borderRadius: "10px",
-  cursor: "pointer",
-  fontWeight: "bold",
-};

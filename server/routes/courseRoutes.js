@@ -8,6 +8,8 @@ import {
   getTeacherAllCourses,
   getTeacherApprovedCourses,
   getTeacherPendingCourses,
+  getTeacherCourseById,
+  updateTeacherCourse
 } from "../controllers/courseController.js";
 
 const router = express.Router();
@@ -47,5 +49,9 @@ router.get("/", getAllCourses);
 
 // ✅ Student opens only approved course
 router.get("/:id", courseById);
+
+router.get("/teacher/course/:courseId", getTeacherCourseById);
+
+router.put("/teacher/update/:courseId", updateTeacherCourse);
 
 export default router;

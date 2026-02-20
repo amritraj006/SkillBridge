@@ -152,7 +152,6 @@ export const getPendingCourses = async (req, res) => {
   }
 };
 
-
 export const getTeacherAllCourses = async (req, res) => {
   try {
     const { teacherId } = req.params;
@@ -217,5 +216,55 @@ export const getTeacherApprovedCourses = async (req, res) => {
       success: false,
       message: "Server error while fetching approved courses",
     });
+  }
+};
+
+export const getTeacherCourseById = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const teacherId = req.query.teacherId;
+
+    const course = await Course.findOne({
+      _id: courseId,
+      createdBy: teacherId,
+    });
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    res.json({ course });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const updateTeacherCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const { teacherId } = req.query;
+
+    const course = await Course.findOne({
+      _id: courseId,
+      createdBy: teacherId,
+    });
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    // Update fields
+    const updatedCourse = await Course.findByIdAndUpdate(
+      courseId,
+      req.body,
+      { new: true }
+    );
+
+    res.json({
+      message: "Course updated successfully",
+      course: updatedCourse,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
   }
 };
