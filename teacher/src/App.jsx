@@ -6,6 +6,7 @@ import AllCourse from "./pages/AllCourse";
 import CourseDetails from "./pages/CourseDetails";
 import EditCourse from "./pages/EditCourse";
 import { Toaster } from "react-hot-toast";
+import Account from "./pages/Account";
 
 const App = () => {
 
@@ -19,6 +20,7 @@ const App = () => {
     <Route path="/my-courses" element={<AllCourse />} />
     <Route path="/teacher/course/:id" element={<CourseDetails />} />
     <Route path="/teacher/edit/:id" element={<EditCourse />} />
+    <Route path="/account" element={<Account />}/>
    </Routes>
     </>
   );

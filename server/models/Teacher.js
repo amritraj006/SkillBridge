@@ -12,14 +12,20 @@ const teacherSchema = new mongoose.Schema(
 
     phone: { type: String, default: "" },
 
-    // ✅ New Fields
-    specialization: { type: String, default: "" }, // ex: MERN Stack, AI, Data Science
+    specialization: { type: String, default: "" },
 
-    skills: { type: [String], default: [] }, // ex: ["React", "Node.js", "MongoDB"]
+    skills: { type: [String], default: [] },
 
-    workingAt: { type: String, default: "" }, // ex: "Google", "XYZ College"
+    workingAt: { type: String, default: "" },
 
-    experienceYears: { type: Number, default: 0 }, // ex: 2, 5, 10
+    experienceYears: { type: Number, default: 0 },
+
+    // ✅ NEW
+    location: { type: String, default: "" },
+
+    website: { type: String, default: "" },
+
+    bio: { type: String, default: ""},
   },
   { timestamps: true }
 );
