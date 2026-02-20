@@ -5,12 +5,16 @@ import { NavLink } from "react-router-dom";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const quickLinks = [
-    { to: "/", label: "Home" },
-    { to: "/courses", label: "Courses" },
-    { to: "/ai", label: "AI Roadmaps" },
-    { to: "/dashboard", label: "Dashboard" },
-  ];
+const quickLinks = [
+  { to: "/", label: "Home" },
+  { to: "/courses", label: "Courses" },
+  { to: "/ai", label: "AI Roadmaps" },
+  { to: "/dashboard", label: "Dashboard" },
+
+  // External URLs
+  { to: "https://admin.yoursite.com", label: "Admin", external: true },
+  { to: "https://teacher.yoursite.com", label: "Educator", external: true }
+];
 
   const resources = [
     { to: "/blog", label: "Blog" },
@@ -87,15 +91,28 @@ const Footer = () => {
             </h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
-                <li key={link.to}>
-                  <NavLink
-                    to={link.to}
-                    className="text-sm text-slate-600 hover:text-blue-600 transition duration-300 hover:translate-x-1 inline-block"
-                  >
-                    {link.label}
-                  </NavLink>
-                </li>
-              ))}
+  <li key={link.to}>
+    {link.external ? (
+      <a 
+
+        href={link.to}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm text-slate-600 hover:text-blue-600 transition duration-300 hover:translate-x-1 inline-block"
+      >
+        {link.label}
+      </a>
+    ) : (
+      <NavLink
+      onClick={() => scrollTo(0,0)}
+        to={link.to}
+        className="text-sm text-slate-600 hover:text-blue-600 transition duration-300 hover:translate-x-1 inline-block"
+      >
+        {link.label}
+      </NavLink>
+    )}
+  </li>
+))}
             </ul>
           </div>
 
