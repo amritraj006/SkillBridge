@@ -1,5 +1,6 @@
 import { Inngest } from "inngest";
 import User from "../models/User.js";
+import { Course } from "../models/Course.js";
 // Create a client to send and receive events
 
 const inngest = new Inngest({ id: "skillbridge-user" });
@@ -31,8 +32,17 @@ const syncUserDeletion = inngest.createFunction(
         // Logic to delete user data from database
         const {id} = event.data;
         await User.findByIdAndDelete(id);
+        await Course.updateMany(
+            {"enrolledStudents.studentId": id},
+            {
+                $pull: {
+                    enrolledStudents: {student: id},
+                },
+                $inc: {totalEnrolled: -1}
+            }
+        );
     }
-)
+);
 
 //Inngest function to update user in database
 
