@@ -417,7 +417,7 @@ useEffect(() => {
                   </div>
                   <p className="text-xs text-slate-500">
                     <span className="font-semibold text-slate-700">
-                      {course.totalEnrolled || 0}+
+                      {course.totalEnrolled || 0}
                     </span>{" "}
                     students enrolled
                   </p>
