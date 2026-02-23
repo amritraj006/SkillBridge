@@ -1,5 +1,6 @@
 
 import { ArrowRight, Sparkles } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 const CallToAction = () => {
   return (
@@ -33,13 +34,14 @@ const CallToAction = () => {
 
         {/* CTA Buttons - Simple & Clean */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="#signup"
+          <NavLink
+            to="/courses"
+            onClick={() => scrollTo(0,0)}
             className="inline-flex items-center gap-2 bg-white text-blue-600 font-semibold px-8 py-4 rounded-full text-base hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
           >
             <span>Get Started Free</span>
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-          </a>
+          </NavLink>
 
           <a
             href="#demo"
