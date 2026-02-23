@@ -19,7 +19,7 @@ const quickLinks = [
   const resources = [
     { to: "/blog", label: "Blog" },
     { to: "/career-test", label: "Career Test" },
-    { to: "/success-stories", label: "Success Stories" },
+    { to: "/feedback", label: "Feedback" },
     { to: "/support", label: "Support" },
   ];
 
@@ -94,8 +94,8 @@ const quickLinks = [
   <li key={link.to}>
     {link.external ? (
       <a 
-
         href={link.to}
+        onClick={() => scrollTo(0,0)}
         target="_blank"
         rel="noopener noreferrer"
         className="text-sm text-slate-600 hover:text-blue-600 transition duration-300 hover:translate-x-1 inline-block"

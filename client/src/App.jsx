@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
 import { Toaster } from "react-hot-toast";
+import AddTestimonial from "./pages/AddTestimonial";
 
 const Home = lazy(() => import("./pages/Home"));
 const AllCourse = lazy(() => import("./pages/AllCourse"));
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/course/learning/:id" element={<Learning />} />
+          <Route path="/feedback" element={<AddTestimonial />}/>
 
           <Route
             path="*"

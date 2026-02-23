@@ -7,6 +7,7 @@ import courseRoutes from "./routes/courseRoutes.js";
 import roadmapRoutes from "./routes/roadmapRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import teacherRoutes from "./routes/teacherRoutes.js";
+import testimonialRoutes from "./routes/testimonialRoutes.js";
 import morgan from "morgan";
 
 dotenv.config();
@@ -32,6 +33,7 @@ app.use("/api/courses", courseRoutes);
 app.use("/api/roadmap", roadmapRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/teachers", teacherRoutes);
+app.use("/api/testimonials", testimonialRoutes);
 
 
 export default app;
