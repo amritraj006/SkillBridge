@@ -1,4 +1,5 @@
 import { Course } from "../models/Course.js";
+import { Teacher } from "../models/Teacher.js";
 
 // ✅ Teacher creates course (pending approval)
 export const createCourse = async (req, res) => {
@@ -135,14 +136,49 @@ export const approveCourse = async (req, res) => {
 
 export const getPendingCourses = async (req, res) => {
   try {
+    // 1️⃣ Get all pending courses (latest first)
     const courses = await Course.find({ isApproved: false }).sort({
       createdAt: -1,
     });
 
+    if (!courses.length) {
+      return res.status(200).json({
+        success: true,
+        courses: [],
+      });
+    }
+
+    // 2️⃣ Extract unique teacher IDs
+    const teacherIds = [...new Set(courses.map(course => course.createdBy))];
+
+    // 3️⃣ Fetch teachers in ONE query
+    const teachers = await Teacher.find(
+      { _id: { $in: teacherIds } },
+      "name email"
+    );
+
+    // 4️⃣ Convert teacher array → map for fast lookup
+    const teacherMap = {};
+    teachers.forEach((teacher) => {
+      teacherMap[teacher._id.toString()] = teacher;
+    });
+
+    // 5️⃣ Attach teacher name to each course
+    const updatedCourses = courses.map((course) => {
+      const teacher = teacherMap[course.createdBy];
+
+      return {
+        ...course.toObject(),
+        teacherName: teacher?.name || "Unknown",
+        teacherEmail: teacher?.email || "",
+      };
+    });
+
     res.status(200).json({
       success: true,
-      courses,
+      courses: updatedCourses,
     });
+
   } catch (error) {
     console.log("❌ getPendingCourses error:", error);
     res.status(500).json({
@@ -266,5 +302,31 @@ export const updateTeacherCourse = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+// ✅ Admin Delete Course
+export const deleteCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    const course = await Course.findById(courseId);
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    await Course.findByIdAndDelete(courseId);
+
+    res.status(200).json({
+      success: true,
+      message: "Course deleted successfully"
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
   }
 };

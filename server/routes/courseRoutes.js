@@ -9,7 +9,8 @@ import {
   getTeacherApprovedCourses,
   getTeacherPendingCourses,
   getTeacherCourseById,
-  updateTeacherCourse
+  updateTeacherCourse,
+  deleteCourse
 } from "../controllers/courseController.js";
 
 const router = express.Router();
@@ -53,5 +54,8 @@ router.get("/:id", courseById);
 router.get("/teacher/course/:courseId", getTeacherCourseById);
 
 router.put("/teacher/update/:courseId", updateTeacherCourse);
+
+// ✅ Admin: delete course
+router.delete("/delete/:courseId", deleteCourse);
 
 export default router;
