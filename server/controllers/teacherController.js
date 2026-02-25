@@ -1,5 +1,18 @@
 import { Teacher } from "../models/Teacher.js";
 
+export const getAllTeachers = async (req, res) => {
+  try {
+    const teachers = await Teacher.find({}).sort({ createdAt: -1 });
+    if (teachers.length === 0) return res.status(404).json({
+      message: "No teachers found."
+    })
+
+    res.status(200).json(teachers);
+  } catch(error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 // ✅ Get Teacher Profile
 export const getTeacherProfile = async (req, res) => {
   try {

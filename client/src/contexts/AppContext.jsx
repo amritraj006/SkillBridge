@@ -3,6 +3,7 @@ import { useUser } from "@clerk/clerk-react";
 import { getAllCourses } from "../api/courseApi";
 import { getAllUsers } from "../api/userApi";
 import { getCart, toggleCartApi } from "../api/userApi";
+import { getAllTeachers } from "../api/teacherApi";
 
 const AppContext = createContext(null);
 
@@ -18,6 +19,8 @@ export const AppProvider = ({ children }) => {
   const [cart, setCart] = useState([]); // array of courseIds
   const [loadingCart, setLoadingCart] = useState(false);
   const [togglingId, setTogglingId] = useState(null);
+
+  const [teachers, setTeachers] = useState([]);
 
   // ✅ Fetch courses
   useEffect(() => {
@@ -130,6 +133,19 @@ export const AppProvider = ({ children }) => {
 
   const cartCount = cart.length;
 
+  const fetchAllTeachers = async () => {
+    try {
+      const res = await getAllTeachers();
+      setTeachers(res);
+    } catch(error) {
+      console.error(error.message);
+    }
+  }
+
+  useEffect(() => {
+    fetchAllTeachers();
+  }, [])
+
   return (
     <AppContext.Provider
       value={{
@@ -147,6 +163,7 @@ export const AppProvider = ({ children }) => {
         toggleCart,
         refreshCart,
         fetchCart,
+        teachers
       }}
     >
       {children}
