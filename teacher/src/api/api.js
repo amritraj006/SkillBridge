@@ -6,10 +6,6 @@ const api = axios.create({
   baseURL: `${backendUrl}/api`,
 });
 
-// ===============================
-// TEACHER API
-// ===============================
-
 export const getTeacherAllCourses = (teacherId) =>
   api.get(`/courses/teacher/${teacherId}/all`);
 

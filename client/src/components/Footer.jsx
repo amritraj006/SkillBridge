@@ -12,8 +12,8 @@ const quickLinks = [
   { to: "/dashboard", label: "Dashboard" },
 
   // External URLs
-  { to: "https://admin.yoursite.com", label: "Admin", external: true },
-  { to: "https://teacher.yoursite.com", label: "Educator", external: true }
+  { to: "https://skillbridge-admin.onrender.com", label: "Admin", external: true },
+  { to: "https://skillbridge-1-br5f.onrender.com", label: "Educator", external: true }
 ];
 
   const resources = [
