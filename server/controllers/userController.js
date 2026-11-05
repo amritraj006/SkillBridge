@@ -1,14 +1,69 @@
 import User from "../models/User.js";
-import {Course} from "../models/Course.js"
+import { Course } from "../models/Course.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import mongoose from "mongoose";
+import { clerkClient } from "@clerk/clerk-sdk-node";
 
+// Helper: Find user in DB or auto-sync/create from Clerk if not yet persisted
+export const getOrSyncUser = async (userId) => {
+  if (!userId) return null;
+
+  let user = await User.findById(userId);
+  if (user) return user;
+
+  // Try fetching user details from Clerk
+  try {
+    const clerkUser = await clerkClient.users.getUser(userId);
+    if (clerkUser) {
+      const email =
+        clerkUser.emailAddresses?.[0]?.emailAddress || `${userId}@clerkuser.com`;
+      const name =
+        `${clerkUser.firstName || ""} ${clerkUser.lastName || ""}`.trim() ||
+        clerkUser.username ||
+        "Student";
+      const image =
+        clerkUser.imageUrl ||
+        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde";
+
+      user = await User.create({
+        _id: userId,
+        email,
+        name,
+        image,
+        cartCourses: [],
+        purchasedCourses: [],
+      });
+      return user;
+    }
+  } catch (error) {
+    console.warn("Could not sync user from Clerk API:", error.message);
+  }
+
+  // Fallback: If Clerk API fails or is unreachable, ensure user document exists for valid Clerk ID
+  if (typeof userId === "string" && userId.startsWith("user_")) {
+    try {
+      user = await User.create({
+        _id: userId,
+        email: `${userId}@clerkuser.com`,
+        name: "Student",
+        image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde",
+        cartCourses: [],
+        purchasedCourses: [],
+      });
+      return user;
+    } catch (e) {
+      return await User.findById(userId);
+    }
+  }
+
+  return null;
+};
 
 export const userDetails = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const user = await User.findById(userId);
+    const user = await getOrSyncUser(userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -36,17 +91,19 @@ export const getCart = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const user = await User.findById(userId).populate({
-      path: "cartCourses.course",
-      select: "title price thumbnailUrl duration", // ✅ only needed fields
-    });
+    const user = await getOrSyncUser(userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    await user.populate({
+      path: "cartCourses.course",
+      select: "title price thumbnailUrl duration", // ✅ only needed fields
+    });
+
     // ✅ Build cart list safely
-    const cartItems = user.cartCourses
+    const cartItems = (user.cartCourses || [])
       .filter((item) => item.course) // important
       .map((item) => ({
         _id: item.course._id,
@@ -76,20 +133,24 @@ export const toggleCart = async (req, res) => {
       return res.status(400).json({ message: "Invalid courseId" });
     }
 
-    const user = await User.findById(userId);
+    const user = await getOrSyncUser(userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
+    if (!user.cartCourses) {
+      user.cartCourses = [];
+    }
+
     const alreadyInCart = user.cartCourses.some(
-      (item) => item.course.toString() === courseId
+      (item) => item.course && item.course.toString() === courseId
     );
 
     if (alreadyInCart) {
       // remove
       user.cartCourses = user.cartCourses.filter(
-        (item) => item.course.toString() !== courseId
+        (item) => item.course && item.course.toString() !== courseId
       );
 
       await user.save();
@@ -126,7 +187,11 @@ export const paymentSuccess = async (req, res) => {
     }
 
     // ✅ Find user (cart populated)
-    const user = await User.findById(clerkId).populate({
+    const user = await getOrSyncUser(clerkId);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    await user.populate({
       path: "cartCourses.course",
       select: "title price thumbnailUrl duration availableSlots totalSlots",
     });
@@ -134,7 +199,11 @@ export const paymentSuccess = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     if (!user.cartCourses || user.cartCourses.length === 0) {
-      return res.status(400).json({ message: "Cart is empty" });
+      return res.status(200).json({
+        message: "Cart is already empty or previously processed.",
+        purchasedCount: 0,
+        totalAmount: 0,
+      });
     }
 
     // ✅ Store cart courses before clearing
@@ -247,11 +316,12 @@ export const paymentSuccess = async (req, res) => {
       </div>
     `;
 
-    await sendEmail({
+    // Send confirmation email asynchronously without blocking the response
+    sendEmail({
       to: user.email,
       subject: "SkillBridge LMS - Payment Successful",
       html,
-    });
+    }).catch((err) => console.error("Email send error:", err?.message || err));
 
     return res.status(200).json({
       message:
@@ -269,16 +339,15 @@ export const getPurchasedCourses = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const user = await User.findById(userId).select("purchasedCourses");
+    const user = await getOrSyncUser(userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.json(user.purchasedCourses); // returns array of course ObjectIds
+    res.json(user.purchasedCourses || []); // returns array of course ObjectIds
   } catch (error) {
     console.error("Error fetching purchased courses:", error);
     res.status(500).json({ message: "Server error" });
   }
-  
 };

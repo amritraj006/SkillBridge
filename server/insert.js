@@ -1,19 +1,8 @@
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+import connectDB from "./config/db.js";
 import { Course } from "./models/Course.js"; // adjust path if needed
 
 dotenv.config();
-
-// 1️⃣ Connect to MongoDB
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("MongoDB connected successfully");
-  } catch (error) {
-    console.error("MongoDB connection failed:", error.message);
-    process.exit(1);
-  }
-};
 
 // 2️⃣ Sample courses with working images from Unsplash
 const sampleCourses = [

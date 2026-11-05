@@ -120,16 +120,17 @@ export const AppProvider = ({ children }) => {
   };
 
   const refreshCart = async (userId) => {
-  setLoadingCart(true);
-  try {
-    const data = await getCart(userId);
-    setCart(data);
-  } catch (err) {
-    console.log(err);
-  } finally {
-    setLoadingCart(false);
-  }
-};
+    setLoadingCart(true);
+    try {
+      const data = await getCart(userId);
+      const ids = Array.isArray(data) ? data.map((c) => c._id) : [];
+      setCart(ids);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingCart(false);
+    }
+  };
 
   const cartCount = cart.length;
 

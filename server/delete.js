@@ -1,28 +1,16 @@
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+import connectDB from "./config/db.js";
 import { Course } from "./models/Course.js"; // adjust path if needed
 
 dotenv.config();
 
-// 1️⃣ Connect to MongoDB
-const connectDB = async () => {
+const deleteAllCourse = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("MongoDB connected successfully");
+    await Course.deleteMany({});
+    console.log("Existing courses cleared");
   } catch (error) {
-    console.error("MongoDB connection failed:", error.message);
-    process.exit(1);
+    console.error(error);
   }
 };
-
-const deleteAllCourse = async () => {
-    try {
-      await Course.deleteMany({});
-      console.log("Existing courses cleared");
-    } catch(error) {
-        console.error(error);
-    }
-}
-
 
 connectDB().then(deleteAllCourse);
